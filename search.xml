@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[经典语录]]></title>
+    <url>%2F2019%2F05%2F05%2Ffirst%2F</url>
+    <content type="text"><![CDATA[2019-05-05 水至清则无鱼，人至察则无徒。 大部分时候，人的选择都有一个时间窗口，也就是我们俗话说的，过了这个村，就没这个店了。 太精明的人不明白，这个世界上没有绝对的完美。完美也不是算计出来的，是用心经营出来的。 逢人只说三分话，莫可全交一片心。 一碗米不够，二碗米不够，三碗四碗还是觉得你只给了沧海一粟。 人的善良一定要有度！当一个人不思进取，一味索取帮助时，请及时收起你的善良。 饭局千古事，得失寸唇知。]]></content>
+      <tags>
+        <tag>经典语录</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F05%2F05%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+  </entry>
+</search>
