@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="forever-chen.github.io">
-  <title>forever-chen</title>
+  <title>new-webPage | forever-chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="forever-chen">
-<meta property="og:url" content="forever-chen.github.io/index.html">
+  <meta name="description" content="网页模板分析登录验证模块前端模块第一种通过cookie实现 前端通过表单提交用户名、密码、记住密码 12345678910axios(&amp;#123;    url:&amp;apos;/login&amp;apos;,    data:&amp;#123;        account:&amp;apos;amdmin&amp;apos;,        password:&amp;apos;123456&amp;apos;,        rememb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="new-webPage">
+<meta property="og:url" content="forever-chen.github.io/2019/05/14/new-webPage/index.html">
 <meta property="og:site_name" content="forever-chen">
+<meta property="og:description" content="网页模板分析登录验证模块前端模块第一种通过cookie实现 前端通过表单提交用户名、密码、记住密码 12345678910axios(&amp;#123;    url:&amp;apos;/login&amp;apos;,    data:&amp;#123;        account:&amp;apos;amdmin&amp;apos;,        password:&amp;apos;123456&amp;apos;,        rememb">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-05-14T10:22:11.888Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="forever-chen">
+<meta name="twitter:title" content="new-webPage">
+<meta name="twitter:description" content="网页模板分析登录验证模块前端模块第一种通过cookie实现 前端通过表单提交用户名、密码、记住密码 12345678910axios(&amp;#123;    url:&amp;apos;/login&amp;apos;,    data:&amp;#123;        account:&amp;apos;amdmin&amp;apos;,        password:&amp;apos;123456&amp;apos;,        rememb">
   
     <link rel="alternative" href="/atom.xml" title="forever-chen" type="application/atom+xml">
   
@@ -150,125 +154,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-commonJs-ESmodule" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-new-webPage" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/15/commonJs-ESmodule/">commonJs-ESmodule</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/15/commonJs-ESmodule/" class="archive-article-date">
-  	<time datetime="2019-05-15T07:40:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-15</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="commonJs"><a href="#commonJs" class="headerlink" title="commonJs"></a>commonJs</h3><h4 id="commonJs用于服务端"><a href="#commonJs用于服务端" class="headerlink" title="commonJs用于服务端"></a>commonJs用于服务端</h4><ul>
-<li>commonJs是整体加载所有模块，然后再在所有模块的基础上取出部分使用</li>
-<li><p>运行时加载模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// CommonJS模块</span><br><span class="line">let &#123; stat, exists, readFile &#125; = require(&apos;fs&apos;);</span><br><span class="line"></span><br><span class="line">// 等同于</span><br><span class="line">let _fs = require(&apos;fs&apos;);</span><br><span class="line">let stat = _fs.stat;</span><br><span class="line">let exists = _fs.exists;</span><br><span class="line">let readfile = _fs.readfile;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>CommonJS 模块输出的是值的缓存，不存在动态更新</p>
-</li>
-<li><p>动态加载</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const path = &apos;./&apos; + fileName;</span><br><span class="line">const myModual = require(path);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>每个文件就是一个模块，有自己的作用域。在一个文件里面定义的变量、函数、类，都是私有的，对其他文件不可见</p>
-</li>
-<li>如果想在多个文件分享变量，必须定义为global对象的属性。</li>
-<li>CommonJS规范规定，每个模块内部，module变量代表当前模块。这个变量是一个对象，它的exports属性（即module.exports）是对外的接口。加载某个模块，其实是加载该模块的module.exports属性。</li>
-<li><p>模块可以多次加载，但是只会在第一次加载时运行一次，然后运行结果就被缓存了，以后再加载，就直接读取缓存结果。要想让模块再次运行，必须清除缓存。所有缓存的模块保存在require.cache之中，如果想删除模块的缓存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 删除指定模块的缓存</span><br><span class="line">delete require.cache[moduleName];</span><br><span class="line"></span><br><span class="line">// 删除所有模块的缓存</span><br><span class="line">Object.keys(require.cache).forEach(function(key) &#123;</span><br><span class="line">  delete require.cache[key];</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>module对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function Module(id, parent) &#123;</span><br><span class="line">  this.id = id;</span><br><span class="line">  this.exports = &#123;&#125;;</span><br><span class="line">  this.parent = parent;</span><br><span class="line">  // ...</span><br><span class="line">module.id 模块的识别符，通常是带有绝对路径的模块文件名。</span><br><span class="line">module.filename 模块的文件名，带有绝对路径。</span><br><span class="line">module.loaded 返回一个布尔值，表示模块是否已经完成加载。</span><br><span class="line">module.parent 返回一个对象，表示调用该模块的模块。</span><br><span class="line">module.children 返回一个数组，表示该模块要用到的其他模块。</span><br><span class="line">module.exports 表示模块对外输出的值。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>module.exports属性表示当前模块对外输出的接口，其他文件加载该模块，实际上就是读取module.exports变量。</p>
-</li>
-<li>为了方便，Node为每个模块提供一个exports变量，指向module.exports。</li>
-<li><p>CommonJS模块的加载机制是，输入的是被输出的值的拷贝,修改输入的模块不会影响源模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这等同在每个模块头部，有一行这样的命令。</span><br><span class="line">var exports = module.exports;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>不能直接将exports变量指向一个值，因为这样等于切断了exports与module.exports的联系。exports可以理解为module.exports的一个引用</p>
-<h4 id="AMD用于客户端"><a href="#AMD用于客户端" class="headerlink" title="AMD用于客户端"></a>AMD用于客户端</h4><h4 id="ESmodule"><a href="#ESmodule" class="headerlink" title="ESmodule"></a>ESmodule</h4></li>
-<li><p>编译时加载模块，并且只加载需要的模块，可以做到静态优化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// ES6模块</span><br><span class="line">import &#123; stat, exists, readFile &#125; from &apos;fs&apos;;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>export语句输出的接口，与其对应的值是动态绑定关系，即通过该接口，可以取到模块内部实时的值</p>
-</li>
-<li>export命令可以出现在模块的任何位置，只要处于模块顶层就可以</li>
-<li>import命令输入的变量都是只读的，因为它的本质是输入接口</li>
-<li>import命令输入的变量是一个对象，可以改变该对象的属性，但是这样其它所有用到这个模块的地方都会访问到这个属性</li>
-<li><p>import因为是在编译时执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo();</span><br><span class="line">import &#123; foo &#125; from &apos;my_module&apos;;</span><br><span class="line">上面的代码不会报错，因为import的执行早于foo的调用。这种行为的本质是，import命令是编译阶段执行的，在代码运行之前。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>import是静态执行，所以不能使用表达式和变量，这些只有在运行时才能得到结果的语法结构</p>
-</li>
-<li><p>import()函数返回一个 Promise 对象，它运行时执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const main = document.querySelector(&apos;main&apos;);</span><br><span class="line"></span><br><span class="line">import(`./section-modules/$&#123;someVariable&#125;.js`)</span><br><span class="line">  .then(module =&gt; &#123;</span><br><span class="line">    module.loadPageInto(main);</span><br><span class="line"> &#125;).catch(err =&gt; &#123;</span><br><span class="line">    main.textContent = err.message;</span><br><span class="line"> &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>import类似于commonJs的require，但是前者是异步加载，后者是同步加载</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/15/commonJs-ESmodule/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-new-webPage" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/14/new-webPage/">new-webPage</a>
+    <h1 class="article-title" itemprop="name">
+      new-webPage
     </h1>
   
 
@@ -295,6 +188,27 @@
       
 
       
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
     </div>
     <div class="article-info article-info-index">
       
@@ -302,16 +216,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/14/new-webPage/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:forever-chen.github.io/2019/05/14/new-webPage/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2019/05/15/commonJs-ESmodule/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          commonJs-ESmodule
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/13/learn-express/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">learn-express</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -331,335 +313,14 @@
 
 
 
-
   
-    <article id="post-learn-express" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/13/learn-express/">learn-express</a>
-    </h1>
   
 
-        
-        <a href="/2019/05/13/learn-express/" class="archive-article-date">
-  	<time datetime="2019-05-13T08:25:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="learn-express"><a href="#learn-express" class="headerlink" title="learn express"></a>learn express</h2><p>Express 是一个保持最小规模的灵活的 Node.js Web 应用程序开发框架，为 Web 和移动应用程序提供一组强大的功能。</p>
-<h4 id="安装-express"><a href="#安装-express" class="headerlink" title="安装 express"></a>安装 express</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install express --save</span><br></pre></td></tr></table></figure>
-<h4 id="express"><a href="#express" class="headerlink" title="express()"></a>express()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&apos;express&apos;);</span><br><span class="line">var app = express();</span><br></pre></td></tr></table></figure>
-<h5 id="express本身暴露的方法"><a href="#express本身暴露的方法" class="headerlink" title="express本身暴露的方法"></a>express本身暴露的方法</h5><ul>
-<li><p>express.json()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">用post请求想后台传参数时，数据量比较大时有时会报错</span><br><span class="line">express.json(&#123;limit:&apos;500k&apos;&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>静态文件夹express.static()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(&apos;/static&apos;, express.static(__dirname + &apos;/public&apos;));</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>express.Router()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">strict默认值为false，“/foo” and “/foo/” are treated the same by the router.</span><br><span class="line">express.Router(&#123;strict:true&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>express.urlencoded()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(bodyParser.urlencoded(&#123;extended: false&#125;));</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h4><ul>
-<li><p>app.locals express实例的这个对象存储系统变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.locals.title=&apos;list&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>app.all() 适配所有http请求方式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.all(&apos;*&apos;, requireAuthentication, loadUser);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>app.disable(name) == app.set(name, false) 设置一个boolean变量</p>
-</li>
-<li>app.enable(name) == app.set(name, true)</li>
-<li>app.disabled(name)/app.enable(name)    判断一个boolean</li>
-<li>app.engine()  引入模板文件</li>
-<li>app.get(‘name’)  获取由app.set()设置的变量</li>
-<li>app.get(path, callback [, callback …])  http请求方式</li>
-<li>app.listen()  端口监听，如果不设置端口，会自动指定到一个可用的端口</li>
-<li>http.createServer(app).listen(80);<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.listen = function() &#123;</span><br><span class="line">    var server = http.createServer(this);</span><br><span class="line">    return server.listen.apply(server, arguments);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h4><ul>
-<li><p>req.baseUrl</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var greet = express.Router();</span><br><span class="line">greet.get(&apos;/jp&apos;, function (req, res) &#123;</span><br><span class="line">    console.log(req.baseUrl); // /greet</span><br><span class="line">    res.send(&apos;Konichiwa!&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">app.use(&apos;/greet&apos;, greet); // load the router on &apos;/greet&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>req.body</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var bodyParser = require(&apos;body-parser&apos;);</span><br><span class="line">var multer = require(&apos;multer&apos;); // v1.0.5</span><br><span class="line">var upload = multer(); // for parsing multipart/form-data</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.json()); // for parsing application/json</span><br><span class="line">app.use(bodyParser.urlencoded(&#123; extended: true &#125;)); // for parsing application/x-www-form-urlencoded</span><br><span class="line"></span><br><span class="line">app.post(&apos;/profile&apos;, upload.array(), function (req, res, next) &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.json(req.body);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>req.cookies 需要用到cookie-parser.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var cookieParser = require(&apos;cookie-parser&apos;)</span><br><span class="line">app.use(cookieParser())</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><a href="https://github.com/jshttp/fresh" target="_blank" rel="noopener">req.fresh</a>  </p>
-</li>
-<li>req.hostname</li>
-<li>req.ip</li>
-<li>req.method    请求方式（get/post）</li>
-<li><p>req.baseUrl   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">这些属性不是express原生的，是继承至http</span><br><span class="line">app.use(&apos;/admin&apos;, function(req, res, next) &#123;  // GET &apos;http://www.example.com/admin/new&apos;</span><br><span class="line">    console.log(req.originalUrl); // &apos;/admin/new&apos;</span><br><span class="line">    console.log(req.baseUrl); // &apos;/admin&apos;</span><br><span class="line">    console.log(req.path); // &apos;/new&apos;</span><br><span class="line">    next();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>req.params</p>
-</li>
-<li>req.protocol</li>
-<li>req.query 获取问号后面的参数<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// GET /shoes?order=desc&amp;shoe[color]=blue&amp;shoe[type]=converse</span><br><span class="line">req.query.order</span><br><span class="line">// =&gt; &quot;desc&quot;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h4><ul>
-<li><p>res.cookie(name, value [, options])</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.cookie(&apos;rememberme&apos;, &apos;1&apos;, &#123; expires: new Date(Date.now() + 900000), httpOnly: true &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.clearCookie()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.clearCookie(&apos;name&apos;, &#123; path: &apos;/admin&apos; &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.download(path [, filename] [, options] [, fn])    客户端提示用户下载</p>
-</li>
-<li><p>res.end()     可以返回任何数据结束请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.status(404).end();</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.json()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res.status(500).json(&#123; error: &apos;message&apos; &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.redirect([status,] path)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">status 默认值为302</span><br><span class="line">res.redirect(301, &apos;http://example.com&apos;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.send([body])</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">参数可以为object/string/array</span><br><span class="line">res.status(500).send(&#123; error: &apos;something blew up&apos; &#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>res.render()  一般只有在有模板引擎的时候使用</p>
-</li>
-<li>res.sendFile(path [, options] [, fn])     返回文件就可以使用</li>
-<li>res.sendStatus(statusCode)<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">res.sendStatus(200); // equivalent to res.status(200).send(&apos;OK&apos;)</span><br><span class="line">res.sendStatus(403); // equivalent to res.status(403).send(&apos;Forbidden&apos;)</span><br><span class="line">res.sendStatus(404); // equivalent to res.status(404).send(&apos;Not Found&apos;)</span><br><span class="line">res.sendStatus(500); // equivalent to res.status(500).send(&apos;Internal Server Error&apos;)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="Router"><a href="#Router" class="headerlink" title="Router"></a>Router</h4><ul>
-<li><p>router.all()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">router.all(&apos;/api/*&apos;, requireAuthentication);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>router.method()</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.get(/^\/commits\/(\w+)(?:\.\.(\w+))?$/, function(req, res)&#123;</span><br><span class="line">    var from = req.params[0];</span><br><span class="line">    var to = req.params[1] || &apos;HEAD&apos;;</span><br><span class="line">    res.send(&apos;commit range &apos; + from + &apos;..&apos; + to);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>router.use()</p>
-</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/13/learn-express/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-first" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/05/first/">经典语录</a>
-    </h1>
   
 
-        
-        <a href="/2019/05/05/first/" class="archive-article-date">
-  	<time datetime="2019-05-05T12:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="2019-05-05"><a href="#2019-05-05" class="headerlink" title="2019-05-05"></a>2019-05-05</h2><ul>
-<li>水至清则无鱼，人至察则无徒。</li>
-<li>大部分时候，人的选择都有一个时间窗口，也就是我们俗话说的，过了这个村，就没这个店了。 </li>
-<li>太精明的人不明白，这个世界上没有绝对的完美。完美也不是算计出来的，是用心经营出来的。 </li>
-<li>逢人只说三分话，莫可全交一片心。</li>
-<li>一碗米不够，二碗米不够，三碗四碗还是觉得你只给了沧海一粟。 </li>
-<li>人的善良一定要有度！当一个人不思进取，一味索取帮助时，请及时收起你的善良。 </li>
-<li>饭局千古事，得失寸唇知。<h2 id="2019-05-08"><a href="#2019-05-08" class="headerlink" title="2019-05-08"></a>2019-05-08</h2></li>
-<li>有时候我们总是肆无忌惮的伤害我们身边的人，因为我们知道，我们根本无法伤害到那些不爱我们的人</li>
-<li>太过轻易得到的东西，刚开始会让人觉得欣喜，但长时间下来，会让别人觉得理所当然。人类的劣根性，总是习惯于攀附强者而欺凌弱者</li>
-<li>学会拒绝别人，既是对自己的负责，也是对他人的尊重。</li>
-<li>所有的烦恼都来源于看不清自己，你那么顾及他人，谁来顾及你？生活是现实的，不会因为你的委曲求全而变得更加美好，是你的心软教会了别人得寸进尺。</li>
-<li>与其照顾别人，伤痕累累，不如坚持自己，活得洒脱。</li>
-<li>绝大多数的人是因为看见而相信，只有少数的人是因为相信而看见</li>
-<li>“我们没有办法跟别人拼昨天，我们也许也没有办法跟别人拼今天，但我们必须跟别人拼未来”。</li>
-<li>人生没有彩排，每一天都是现场直播</li>
-<li>如果你简单，这个世界就对你简单</li>
-<li>怀才就像怀孕，时间久了会让人看出来</li>
-<li>人生如果错了方向，停止就是进步</li>
-<li>要成功，需要朋友，要取得巨大的成功，需要敌人；天下没有永远的敌人，但是有永远的朋友，有时候敌人也可以成为朋友<h2 id="2019-05-09"><a href="#2019-05-09" class="headerlink" title="2019-05-09"></a>2019-05-09</h2></li>
-<li>抱有被动思维的人，总是习惯承受：世界给我什么，我就接受什么。</li>
-<li>习惯受害者思维的人，或许可以获得他人一时的同情与抚慰，但不可能长久。</li>
-<li>有字书中聊新知，无字书里品人生。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">经典语录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/05/first/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/05/hello-world/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/2019/05/05/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-05T11:55:53.432Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<p>### </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -682,8 +343,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
