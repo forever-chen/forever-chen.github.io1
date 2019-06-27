@@ -152,6 +152,497 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-why-use-node" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/24/why-use-node/">why-use-node</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/24/why-use-node/" class="archive-article-date">
+  	<time datetime="2019-06-24T03:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是node"><a href="#什么是node" class="headerlink" title="什么是node"></a>什么是node</h2><ul>
+<li>Node.js® 是一个基于 Chrome V8 引擎 的 JavaScript 运行环境。</li>
+<li>在node中，也是V8引擎负责解释javascript<h2 id="node-js特点"><a href="#node-js特点" class="headerlink" title="node.js特点"></a>node.js特点</h2><h3 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h3></li>
+<li>在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。</li>
+<li>Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞I/O、事件驱动机制，让Node.js程序宏观上也是并行的。</li>
+<li>Node 中最核心的是 v8 引擎，在 Node 启动后，会创建 v8 的实例，这个实例是多线程的</li>
+<li>大家常说的 Node 是单线程的指的是 JavaScript 的执行是单线程的，但 Javascript 的宿主环境，无论是 Node 还是浏览器都是多线程的。</li>
+<li>Node 中有一些 IO 操作（DNS，FS）和一些 CPU 密集计算（Zlib，Crypto）会启用 Node 的线程池，而线程池默认大小为 4</li>
+<li>因为 Node 中提供了 cluster 模块，cluster 实现了对 child_process 的封装，通过 fork 方法创建子进程的方式实现了多进程模型。</li>
+<li><p>Node并非真正的单线程架构，Node自身还有一定的I/O线程存在，这些I/O线程由底层libuv处理，这就意味着Node在访问系统I/O时还是多线程的，对于文件读取、SQL查询、网路请求这些具体操作，Node还是使用多线程来进行处理从而保证Node的处理效率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">主线程：编译、执行代码。</span><br><span class="line">编译/优化线程：在主线程执行的时候，可以优化代码。</span><br><span class="line">分析器线程：记录分析代码运行时间，为 Crankshaft 优化代码执行提供依据。</span><br><span class="line">垃圾回收的几个线程。</span><br><span class="line">优点：</span><br><span class="line">1.操作系统完全不再有线程创建，销毁的时间开销</span><br><span class="line">2.不用像多线程编程一样处处在意状态的同步问题</span><br><span class="line">缺点：</span><br><span class="line">1.无法利用多核CPU</span><br><span class="line">2.一个用户造成线程奔溃，整个服务都奔溃，应用健壮性需要考虑</span><br><span class="line">3.大量计算占用CPU导致无法继续调用异步I/O</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://nodejs.org/api/worker_threads.html" target="_blank" rel="noopener">延伸阅读Node 10.5.0 的发布worker_thread 模块</a></p>
+<h3 id="非阻塞I-O"><a href="#非阻塞I-O" class="headerlink" title="非阻塞I/O"></a>非阻塞I/O</h3></li>
+<li>阻塞 是指在 Node.js 程序中，其它 JavaScript 语句的执行，必须等待一个非 JavaScript 操作完成。</li>
+<li>在 Node.js 标准库中的所有 I/O 方法都提供异步版本，非阻塞，并且接受回调函数。</li>
+<li>阻塞模式下，一个线程只能处理一项任务，要想提高吞吐量必须通过多线程。而非阻塞模式下，一个线程永远在执行计算操作，这个线程的CPU核心利用率永远是100%。所以，这是一种特别有哲理的解决方案：与其人多，但是好多人闲着；还不如一个人玩命，往死里干活儿。</li>
+<li>概念：<a href="https://www.jianshu.com/p/9fa26b0b22a0" target="_blank" rel="noopener">阻塞、非阻塞、同步、异步</a><h3 id="事件驱动-event-driven"><a href="#事件驱动-event-driven" class="headerlink" title="事件驱动 event-driven"></a>事件驱动 event-driven</h3></li>
+<li>在Node中，客户端请求建立连接，提交数据等行为，会触发相应的事件。在Node中，在一个时刻，只能执行一个事件回调函数，但是在执行一个事件回调函数的中途，可以转而处理其他事件（比如，又有新用户连接了），然后返回继续执行原事件的回调函数，这种处理机制，称为“事件环”机制。<h2 id="node适合在哪里用"><a href="#node适合在哪里用" class="headerlink" title="node适合在哪里用"></a>node适合在哪里用</h2><h3 id="善于I-O，不善于计算"><a href="#善于I-O，不善于计算" class="headerlink" title="善于I/O，不善于计算"></a>善于I/O，不善于计算</h3></li>
+<li>善于i/o是因为它最擅长的就是人物调度</li>
+<li><p>当应用程序需要处理大量并发的I/O，而在向客户端发出响应之前，应用程序内部并不需要进行非常复杂的处理的时候，Node.js非常适合。Node.js也非常适合与web socket配合，开发长连接的实时交互应用程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户表单收集</span><br><span class="line">考试系统</span><br><span class="line">聊天室</span><br><span class="line">图文直播</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Node.js没有web容器,不像其它的jsp、php等一样，直接通过静态路径就可以访问文件</p>
+<h2 id="了解概念"><a href="#了解概念" class="headerlink" title="了解概念"></a>了解概念</h2><h3 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h3></li>
+<li>高并发：是互联网分布式系统架构设计中必须考虑的因素之一，它通常是指，通过设计保证系统能够同时并行处理很多请求。</li>
+<li>高并发的指标：响应时间（Response Time），吞吐量（Throughput），每秒查询率QPS（Query Per Second），并发用户数<h3 id="nodejs流行框架"><a href="#nodejs流行框架" class="headerlink" title="nodejs流行框架"></a><a href="https://www.oschina.net/translate/best-nodejs-frameworks-for-web-and-app-development?cmp" target="_blank" rel="noopener">nodejs流行框架</a></h3></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/24/why-use-node/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-read-note" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/19/read-note/">read-note</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/19/read-note/" class="archive-article-date">
+  	<time datetime="2019-06-19T01:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="变革中国"><a href="#变革中国" class="headerlink" title="变革中国"></a>变革中国</h2><h4 id="毛泽东去世"><a href="#毛泽东去世" class="headerlink" title="毛泽东去世"></a>毛泽东去世</h4><ul>
+<li>1976-9-9毛泽东去世，69年毛泽东力排众议把林彪委任接班人，并在9次全国人大代表大会写入党章</li>
+<li>林彪是在文化大革命期间在大会上公然反对彭德怀而被重用，彭德怀参加过抗美援朝之后任职国防部长，但是之后被林彪取代，林彪把毛主席语录当成从不离手的“道具”</li>
+<li>林彪野心太大，文化大革命期间想造反，之后被发现坐飞机逃跑坠落</li>
+<li>林彪死了之后，华国锋成为了接班人，毛去世之后提出了两个凡是</li>
+<li>四人帮也是在文化大革命期间发展起来的（毛泽东的遗孀江青、王洪文、张春桥、姚文元）</li>
+<li>76年秘密处决了四人帮，计划周密</li>
+<li>反对毛泽东的以阶级斗争为主的发展路线，提出以经济建设为中，并重新启动了周恩来的四个现代化（在文化大革命期间提出但是没有被慎重考虑）</li>
+<li>此时邓小平由于反对毛泽东的大跃进和文化大革命被流放到工厂做工人，直到此时被重用，委任国务院副总理</li>
+<li>在这期间把文化大革命发展起来的一些地方以及省级官员全部换血（重视人才和教育）</li>
+<li>华国锋是政治新手，政治资源比较少，邓小平、陈云等人一直都是思想一致的领导人</li>
+<li>邓小平和华国锋都是主要发展经济所以当时的经济发展相当迅速（引入国外的先进技术发展、甚至走国际贷款）</li>
+<li>毛泽东的反对中央集权在华国锋和邓小平这里得到支持，但是华国锋还是发展了个人中心主义（类似于毛泽东）为了巩固自己的权利</li>
+<li>这一点收到许多人的反对，由于自己又没有政治资源，所以慢慢被排挤，先后丢了军委主席和国务院总理的位置</li>
+<li>虽然他的有些思想还是不够正面，但是发展经济使得中国走上一条正常的发展道路</li>
+<li>从80年代后期慢慢中国慢慢走向了市场经济</li>
+<li>虽然这期间有许多的观点反对毛泽东的思想，但是毛泽东提出的论十大关系和实事求是的思想方针还是被强烈支持的</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/19/read-note/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-singile-spa" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/18/singile-spa/">singile-spa</a>
+    </h1>
+  
+
+        
+        <a href="/2019/06/18/singile-spa/" class="archive-article-date">
+  	<time datetime="2019-06-18T07:31:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="single-spa学习笔记"><a href="#single-spa学习笔记" class="headerlink" title="single-spa学习笔记"></a>single-spa学习笔记</h2><ul>
+<li><a href="https://github.com/CanopyTax/single-spa-examples" target="_blank" rel="noopener">官方例子</a></li>
+<li><a href="https://single-spa.js.org/docs/getting-started-overview.html" target="_blank" rel="noopener">官方文档</a><h3 id="文档学习"><a href="#文档学习" class="headerlink" title="文档学习"></a>文档学习</h3><h4 id="解决问题以及优点"><a href="#解决问题以及优点" class="headerlink" title="解决问题以及优点"></a>解决问题以及优点</h4></li>
+<li>在同一项目中使用多套框架</li>
+<li>多套系统之间独立部署</li>
+<li>重构代码，可以对功能进行拆分重构</li>
+<li>懒加载实现对应用的按需加载(单页面应用也可以实现)<h4 id="浏览器兼容性（Chrome-Firefox-Safari-IE11-and-Edge"><a href="#浏览器兼容性（Chrome-Firefox-Safari-IE11-and-Edge" class="headerlink" title="浏览器兼容性（Chrome, Firefox, Safari, IE11, and Edge)"></a>浏览器兼容性（Chrome, Firefox, Safari, IE11, and Edge)</h4>#### </li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/06/18/singile-spa/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react再学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/29/react再学习/">react再学习</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/29/react再学习/" class="archive-article-date">
+  	<time datetime="2019-05-29T09:27:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="context"><a href="#context" class="headerlink" title="context"></a>context</h3><ul>
+<li>Context 提供了一个无需为每层组件手动添加 props，就能在组件树间进行数据传递的方法(利用这个功能设置切换主题，改变根元素的类名)。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">// Context 可以让我们无须明确地传遍每一个组件，就能将值深入传递进组件树。</span><br><span class="line">// 为当前的 theme 创建一个 context（“light”为默认值）。</span><br><span class="line">const ThemeContext = React.createContext(&apos;light&apos;);</span><br><span class="line"></span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">render() &#123;</span><br><span class="line">    // 使用一个 Provider 来将当前的 theme 传递给以下的组件树。</span><br><span class="line">    // 无论多深，任何组件都能读取这个值。</span><br><span class="line">    // 在这个例子中，我们将 “dark” 作为当前的值传递下去。</span><br><span class="line">    return (</span><br><span class="line">    &lt;ThemeContext.Provider value=&quot;dark&quot;&gt;</span><br><span class="line">        &lt;Toolbar /&gt;</span><br><span class="line">    &lt;/ThemeContext.Provider&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 中间的组件再也不必指明往下传递 theme 了。</span><br><span class="line">function Toolbar(props) &#123;</span><br><span class="line">return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &lt;ThemedButton /&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class ThemedButton extends React.Component &#123;</span><br><span class="line">// 指定 contextType 读取当前的 theme context。</span><br><span class="line">// React 会往上找到最近的 theme Provider，然后使用它的值。</span><br><span class="line">// 在这个例子中，当前的 theme 值为 “dark”。</span><br><span class="line">static contextType = ThemeContext;</span><br><span class="line">render() &#123;</span><br><span class="line">    return &lt;Button theme=&#123;this.context&#125; /&gt;;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><h4 id="React-createContext"><a href="#React-createContext" class="headerlink" title="React.createContext"></a>React.createContext</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const MyContext = React.createContext(defaultValue);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>创建一个 Context 对象。当 React 渲染一个订阅了这个 Context 对象的组件，这个组件会从组件树中离自身最近的那个匹配的 Provider 中读取到当前的 context 值。</p>
+<h4 id="Context-Provider"><a href="#Context-Provider" class="headerlink" title="Context.Provider"></a>Context.Provider</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;MyContext.Provider value=&#123;/* 某个值 */&#125;&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>每个 Context 对象都会返回一个 Provider React 组件，它允许消费组件订阅 context 的变化。</p>
+</li>
+<li><p>当 Provider 的 value 值发生变化时，它内部的所有消费组件都会重新渲染。Provider 及其内部 consumer 组件都不受制于 shouldComponentUpdate 函数，因此当 consumer 组件在其祖先组件退出更新的情况下也能更新。</p>
+<h4 id="Class-contextType"><a href="#Class-contextType" class="headerlink" title="Class.contextType"></a>Class.contextType</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyClass extends React.Component &#123;</span><br><span class="line">componentDidMount() &#123;</span><br><span class="line">    let value = this.context;</span><br><span class="line">    /* 在组件挂载完成后，使用 MyContext 组件的值来执行一些有副作用的操作 */</span><br><span class="line">&#125;</span><br><span class="line">componentDidUpdate() &#123;</span><br><span class="line">    let value = this.context;</span><br><span class="line">    /* ... */</span><br><span class="line">&#125;</span><br><span class="line">componentWillUnmount() &#123;</span><br><span class="line">    let value = this.context;</span><br><span class="line">    /* ... */</span><br><span class="line">&#125;</span><br><span class="line">render() &#123;</span><br><span class="line">    let value = this.context;</span><br><span class="line">    /* 基于 MyContext 组件的值进行渲染 */</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">MyClass.contextType = MyContext;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>挂载在 class 上的 contextType 属性会被重赋值为一个由 React.createContext() 创建的 Context 对象。这能让你使用 this.context 来消费最近 Context 上的那个值。你可以在任何生命周期中访问到它，包括 render 函数中。</p>
+<h3 id="错误边界"><a href="#错误边界" class="headerlink" title="错误边界"></a>错误边界</h3><h4 id="错误类型"><a href="#错误类型" class="headerlink" title="错误类型"></a>错误类型</h4></li>
+<li>事件处理</li>
+<li>异步代码（例如 setTimeout 或 requestAnimationFrame 回调函数）</li>
+<li>服务端渲染</li>
+<li>它自身抛出来的错误（并非它的子组件）</li>
+<li><p>如果一个 class 组件中定义了 static getDerivedStateFromError() 或 componentDidCatch() 这两个生命周期方法中的任意一个（或两个）时，那么它就变成一个错误边界。当抛出错误后，请使用 static getDerivedStateFromError() 渲染备用 UI ，使用 componentDidCatch() 打印错误信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">class ErrorBoundary extends React.Component &#123;</span><br><span class="line">constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123; hasError: false &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static getDerivedStateFromError(error) &#123;</span><br><span class="line">    // Update state so the next render will show the fallback UI.</span><br><span class="line">    return &#123; hasError: true &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">componentDidCatch(error, info) &#123;</span><br><span class="line">    // You can also log the error to an error reporting service</span><br><span class="line">    logErrorToMyService(error, info);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">render() &#123;</span><br><span class="line">    if (this.state.hasError) &#123;</span><br><span class="line">    // You can render any custom fallback UI</span><br><span class="line">    return &lt;h1&gt;Something went wrong.&lt;/h1&gt;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return this.props.children; </span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">// 组件的使用</span><br><span class="line">&lt;ErrorBoundary&gt;</span><br><span class="line">    &lt;MyWidget /&gt;</span><br><span class="line">&lt;/ErrorBoundary&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>错误边界的工作方式类似于 JavaScript 的 catch {}，不同的地方在于错误边界只针对 React 组件。只有 class 组件才可以成为成错误边界组件。大多数情况下, 你只需要声明一次错误边界组件, 并在整个应用中使用它。</p>
+</li>
+<li>错误边界的粒度由你来决定，可以将其包装在最顶层的路由组件并为用户展示一个 “Something went wrong” 的错误信息，就像服务端框架经常处理崩溃一样。你也可以将单独的部件包装在错误边界以保护应用其他部分不崩溃。</li>
+<li>自 React 16 起，任何未被错误边界捕获的错误将会导致整个 React 组件树被卸载。</li>
+<li><p>(React 16 还提供了组件栈追踪，现在你可以准确地查看发生在组件树内的错误信息，但是它仅仅适用于开发环境)[<a href="https://www.npmjs.com/package/babel-plugin-transform-react-jsx-source]" target="_blank" rel="noopener">https://www.npmjs.com/package/babel-plugin-transform-react-jsx-source]</a></p>
+<h4 id="React-forwardRef"><a href="#React-forwardRef" class="headerlink" title="React.forwardRef"></a>React.forwardRef</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const FancyButton = React.forwardRef((props, ref) =&gt; (</span><br><span class="line">&lt;button ref=&#123;ref&#125; className=&quot;FancyButton&quot;&gt;</span><br><span class="line">    &#123;props.children&#125;</span><br><span class="line">&lt;/button&gt;</span><br><span class="line">));</span><br><span class="line"></span><br><span class="line">// 你可以直接获取 DOM button 的 ref：</span><br><span class="line">const ref = React.createRef();</span><br><span class="line">&lt;FancyButton ref=&#123;ref&#125;&gt;Click me!&lt;/FancyButton&gt;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这样，使用 FancyButton 的组件可以获取底层 DOM 节点 button 的 ref ，并在必要时访问，就像其直接使用 DOM button 一样。</p>
+<h4 id="Fragments"><a href="#Fragments" class="headerlink" title="Fragments"></a>Fragments</h4></li>
+<li>React 中的一个常见模式是一个组件返回多个元素。Fragments 允许你将子列表分组，而无需向 DOM 添加额外节点。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;React.Fragment&gt;    //编译之后不会生成dom元素</span><br><span class="line">        &lt;ChildA /&gt;</span><br><span class="line">        &lt;ChildB /&gt;</span><br><span class="line">        &lt;ChildC /&gt;</span><br><span class="line">        &lt;/React.Fragment&gt;</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="react性能提升"><a href="#react性能提升" class="headerlink" title="react性能提升"></a>react性能提升</h3><h4 id="Brunch"><a href="#Brunch" class="headerlink" title="Brunch"></a>Brunch</h4><ul>
+<li><p>通过安装 uglify-js-brunch 插件，来获得最高效的 Brunch 生产构建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 如果你使用 npm</span><br><span class="line">npm install --save-dev uglify-js-brunch</span><br><span class="line"></span><br><span class="line"># 如果你使用 Yarn</span><br><span class="line">yarn add --dev uglify-js-brunch</span><br><span class="line">接着，在 build 命令后添加 -p 参数，以创建生产构建：</span><br><span class="line">brunch build -p</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>请注意，你只需要在生产构建时这么做。你不需要在开发环境中使用 -p 参数或者应用这个插件，因为这会隐藏有用的 React 警告信息并使得构建速度变慢。</p>
+</li>
+<li>你可以继承 React.PureComponent 以代替手写 shouldComponentUpdate()。它用当前与之前 props 和 state 的浅比较覆写了 shouldComponentUpdate() 的实现。</li>
+<li>Immutable.js与shouldComponentUpdate结合使用提高性能<h3 id="Portals"><a href="#Portals" class="headerlink" title="Portals"></a>Portals</h3>Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReactDOM.createPortal(child, container)</span><br><span class="line">第一个参数（child）是任何可渲染的 React 子元素，例如一个元素，字符串或 fragment。第二个参数（container）是一个 DOM 元素。</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/29/react再学习/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-react-hooks" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/29/react-hooks/">react-hooks</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/29/react-hooks/" class="archive-article-date">
+  	<time datetime="2019-05-29T08:41:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="react-hooks笔记"><a href="#react-hooks笔记" class="headerlink" title="react hooks笔记"></a>react hooks笔记</h2><h3 id="react-hook产生背景"><a href="#react-hook产生背景" class="headerlink" title="react hook产生背景"></a>react hook产生背景</h3><ul>
+<li>class 不能很好的压缩，并且会使热重载出现不稳定</li>
+<li>在组件之间复用状态逻辑很难</li>
+<li>复杂组件变得难以理解<h4 id="Hook-使用规则"><a href="#Hook-使用规则" class="headerlink" title="Hook 使用规则"></a>Hook 使用规则</h4></li>
+<li>只能在函数最外层调用 Hook。不要在循环、条件判断或者子函数中调用。</li>
+<li>只能在 React 的函数组件中调用 Hook。不要在其他 JavaScript 函数中调用。（还有一个地方可以调用 Hook —— 就是自定义的 Hook 中，我们稍后会学习到。）<h3 id="新的api"><a href="#新的api" class="headerlink" title="新的api"></a>新的api</h3><h4 id="State-Hook"><a href="#State-Hook" class="headerlink" title="State Hook"></a>State Hook</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; useState &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">function Example() &#123;</span><br><span class="line">// 声明一个叫 “count” 的 state 变量。</span><br><span class="line">const [count, setCount] = useState(0);</span><br><span class="line">// 声明多个 state 变量！</span><br><span class="line">const [age, setAge] = useState(42);</span><br><span class="line">const [fruit, setFruit] = useState(&apos;banana&apos;);</span><br><span class="line">const [todos, setTodos] = useState([&#123; text: &apos;Learn Hooks&apos; &#125;]);</span><br><span class="line">return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &lt;p&gt;You clicked &#123;count&#125; times&lt;/p&gt;</span><br><span class="line">    &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;</span><br><span class="line">        Click me</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">    // setCount可以接受函数为参数，参数为上一个state</span><br><span class="line">    &lt;button onClick=&#123;() =&gt; setCount(prevCount =&gt; prevCount + 1)&#125;&gt;+&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="Effect-Hook"><a href="#Effect-Hook" class="headerlink" title="Effect Hook"></a>Effect Hook</h4><p>useEffect 就是一个 Effect Hook，给函数组件增加了操作副作用的能力。它跟 class 组件中的 componentDidMount、componentDidUpdate 和 componentWillUnmount 具有相同的用途，只不过被合并成了一个 API。（我们会在使用 Effect Hook 里展示对比 useEffect 和这些方法的例子。）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; useState, useEffect &#125; from &apos;react&apos;;</span><br><span class="line"></span><br><span class="line">function Example() &#123;</span><br><span class="line">const [count, setCount] = useState(0);</span><br><span class="line"></span><br><span class="line">// 相当于 componentDidMount 和 componentDidUpdate:</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    // 使用浏览器的 API 更新页面标题</span><br><span class="line">    document.title = `You clicked $&#123;count&#125; times`;</span><br><span class="line">&#125;);</span><br><span class="line">// 相当于 componentDidMount</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    // 使用浏览器的 API 更新页面标题</span><br><span class="line">    document.title = `You clicked $&#123;count&#125; times`;</span><br><span class="line">&#125;,[]);</span><br><span class="line">// 相当于 componentDidMount和count发生变化时触发effect，类似于shouldComponentWillMount</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">    // 使用浏览器的 API 更新页面标题</span><br><span class="line">    document.title = `You clicked $&#123;count&#125; times`;</span><br><span class="line">&#125;,[count]);</span><br><span class="line">return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">    &lt;p&gt;You clicked &#123;count&#125; times&lt;/p&gt;</span><br><span class="line">    &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;</span><br><span class="line">        Click me</span><br><span class="line">    &lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line">// 为防止内存泄漏，清除函数会在组件卸载前执行。另外，如果组件多次渲染（通常如此），则在执行下一个 effect 之前，上一个 effect 就已被清除。</span><br><span class="line">useEffect(() =&gt; &#123;</span><br><span class="line">const subscription = props.source.subscribe();</span><br><span class="line">return () =&gt; &#123;</span><br><span class="line">    // 清除订阅</span><br><span class="line">    subscription.unsubscribe();</span><br><span class="line">&#125;;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>副作用函数还可以通过返回一个函数来指定如何“清除”副作用</p>
+<h4 id="useContext"><a href="#useContext" class="headerlink" title="useContext"></a>useContext</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const value = useContext(MyContext);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收一个 context 对象（React.createContext 的返回值）并返回该 context 的当前值。当前的 context 值由上层组件中距离当前组件最近的 &lt;MyContext.Provider&gt; 的 value prop 决定。当组件上层最近的 &lt;MyContext.Provider&gt; 更新时，该 Hook 会触发重渲染，并使用最新传递给 MyContext provider 的 context value 值。</p>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/29/react-hooks/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-WeChartPublicAccount" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/05/22/WeChartPublicAccount/">WeChartPublicAccount</a>
+    </h1>
+  
+
+        
+        <a href="/2019/05/22/WeChartPublicAccount/" class="archive-article-date">
+  	<time datetime="2019-05-22T06:26:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="微信公众号开发"><a href="#微信公众号开发" class="headerlink" title="微信公众号开发"></a>微信公众号开发</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li><a href="https://github.com/muzishuiji/node-wechat" target="_blank" rel="noopener">在github上克隆例子</a></li>
+<li><a href="https://dashboard.ngrok.com/get-started" target="_blank" rel="noopener">由于微信公众号测试服务器必须是线上服务器，本地服务器不能，所有下载代理服务器</a></li>
+<li>然后为了方便起见，把代理服务器解压到例子的根目录下，执行命令<code>.\ngrok.exe http &lt;你的node服务器的端口号&gt;</code></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/05/22/WeChartPublicAccount/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-commonJs-ESmodule" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -533,7 +1024,15 @@
 <li>要成功，需要朋友，要取得巨大的成功，需要敌人；天下没有永远的敌人，但是有永远的朋友，有时候敌人也可以成为朋友<h2 id="2019-05-09"><a href="#2019-05-09" class="headerlink" title="2019-05-09"></a>2019-05-09</h2></li>
 <li>抱有被动思维的人，总是习惯承受：世界给我什么，我就接受什么。</li>
 <li>习惯受害者思维的人，或许可以获得他人一时的同情与抚慰，但不可能长久。</li>
-<li>有字书中聊新知，无字书里品人生。</li>
+<li>有字书中聊新知，无字书里品人生。<h2 id="2019-06-11"><a href="#2019-06-11" class="headerlink" title="2019-06-11"></a>2019-06-11</h2></li>
+<li>用眼看世界，难免一叶障目；用心观世界，万物尽收眼底；而用一个优等的心去触摸世界，一人一物，一草一木，一山一水，皆明朗历历。</li>
+<li>去靠近内心自带光源的人，不仅可以在我们的生活中为自己的人生指路，而且可以为他人照明。</li>
+<li>点燃自身的光源，去照亮别人，则是人生远行的终极目标。</li>
+<li>比成功 和幸福都重要的是，一个人必须有一个真实的自我，一颗饱满的灵魂，他决定了一个人争取成功和体验幸福的能力。</li>
+<li>一个人若是内心自带光源，便不依附，不盲从，终极一生都会独善其身，于人生，于生活，都在学最好的别人，做最好的自己。</li>
+<li>人生不如意事十之八九，生活却从不会厚此薄彼。</li>
+<li>做一个内心自带光源的人，播种你的善良，让美好天天不期而遇；发出你的光芒，每一天的微笑都是你最美的模样。</li>
+<li></li>
 </ul>
 
       
@@ -588,78 +1087,10 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/05/hello-world/" class="archive-article-date">
-  	<time datetime="2019-05-05T11:55:53.432Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-<p>### </p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 
 

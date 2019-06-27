@@ -6,15 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="forever-chen.github.io">
-  <title>Archives | forever-chen</title>
+  <title>why-use-node | forever-chen</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="forever-chen">
-<meta property="og:url" content="forever-chen.github.io/archives/index.html">
+  <meta name="description" content="什么是node Node.js® 是一个基于 Chrome V8 引擎 的 JavaScript 运行环境。 在node中，也是V8引擎负责解释javascriptnode.js特点单线程 在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。 Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触">
+<meta property="og:type" content="article">
+<meta property="og:title" content="why-use-node">
+<meta property="og:url" content="forever-chen.github.io/2019/06/24/why-use-node/index.html">
 <meta property="og:site_name" content="forever-chen">
+<meta property="og:description" content="什么是node Node.js® 是一个基于 Chrome V8 引擎 的 JavaScript 运行环境。 在node中，也是V8引擎负责解释javascriptnode.js特点单线程 在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。 Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-26T03:26:09.183Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="forever-chen">
+<meta name="twitter:title" content="why-use-node">
+<meta name="twitter:description" content="什么是node Node.js® 是一个基于 Chrome V8 引擎 的 JavaScript 运行环境。 在node中，也是V8引擎负责解释javascriptnode.js特点单线程 在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。 Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触">
   
     <link rel="alternative" href="/atom.xml" title="forever-chen" type="application/atom+xml">
   
@@ -150,306 +154,182 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-why-use-node" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      why-use-node
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/24/why-use-node/" class="archive-article-date">
+
+        
+        <a href="/2019/06/24/why-use-node/" class="archive-article-date">
   	<time datetime="2019-06-24T03:37:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-24</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/24/why-use-node/">why-use-node</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是node"><a href="#什么是node" class="headerlink" title="什么是node"></a>什么是node</h2><ul>
+<li>Node.js® 是一个基于 Chrome V8 引擎 的 JavaScript 运行环境。</li>
+<li>在node中，也是V8引擎负责解释javascript<h2 id="node-js特点"><a href="#node-js特点" class="headerlink" title="node.js特点"></a>node.js特点</h2><h3 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h3></li>
+<li>在Java、PHP或者.net等服务器端语言中，会为每一个客户端连接创建一个新的线程。而每个线程需要耗费大约2MB内存。</li>
+<li>Node.js不为每个客户连接创建一个新的线程，而仅仅使用一个线程。当有用户连接了，就触发一个内部事件，通过非阻塞I/O、事件驱动机制，让Node.js程序宏观上也是并行的。</li>
+<li>Node 中最核心的是 v8 引擎，在 Node 启动后，会创建 v8 的实例，这个实例是多线程的</li>
+<li>大家常说的 Node 是单线程的指的是 JavaScript 的执行是单线程的，但 Javascript 的宿主环境，无论是 Node 还是浏览器都是多线程的。</li>
+<li>Node 中有一些 IO 操作（DNS，FS）和一些 CPU 密集计算（Zlib，Crypto）会启用 Node 的线程池，而线程池默认大小为 4</li>
+<li>因为 Node 中提供了 cluster 模块，cluster 实现了对 child_process 的封装，通过 fork 方法创建子进程的方式实现了多进程模型。</li>
+<li><p>Node并非真正的单线程架构，Node自身还有一定的I/O线程存在，这些I/O线程由底层libuv处理，这就意味着Node在访问系统I/O时还是多线程的，对于文件读取、SQL查询、网路请求这些具体操作，Node还是使用多线程来进行处理从而保证Node的处理效率。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">主线程：编译、执行代码。</span><br><span class="line">编译/优化线程：在主线程执行的时候，可以优化代码。</span><br><span class="line">分析器线程：记录分析代码运行时间，为 Crankshaft 优化代码执行提供依据。</span><br><span class="line">垃圾回收的几个线程。</span><br><span class="line">优点：</span><br><span class="line">1.操作系统完全不再有线程创建，销毁的时间开销</span><br><span class="line">2.不用像多线程编程一样处处在意状态的同步问题</span><br><span class="line">缺点：</span><br><span class="line">1.无法利用多核CPU</span><br><span class="line">2.一个用户造成线程奔溃，整个服务都奔溃，应用健壮性需要考虑</span><br><span class="line">3.大量计算占用CPU导致无法继续调用异步I/O</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><a href="https://nodejs.org/api/worker_threads.html" target="_blank" rel="noopener">延伸阅读Node 10.5.0 的发布worker_thread 模块</a></p>
+<h3 id="非阻塞I-O"><a href="#非阻塞I-O" class="headerlink" title="非阻塞I/O"></a>非阻塞I/O</h3></li>
+<li>阻塞 是指在 Node.js 程序中，其它 JavaScript 语句的执行，必须等待一个非 JavaScript 操作完成。</li>
+<li>在 Node.js 标准库中的所有 I/O 方法都提供异步版本，非阻塞，并且接受回调函数。</li>
+<li>阻塞模式下，一个线程只能处理一项任务，要想提高吞吐量必须通过多线程。而非阻塞模式下，一个线程永远在执行计算操作，这个线程的CPU核心利用率永远是100%。所以，这是一种特别有哲理的解决方案：与其人多，但是好多人闲着；还不如一个人玩命，往死里干活儿。</li>
+<li>概念：<a href="https://www.jianshu.com/p/9fa26b0b22a0" target="_blank" rel="noopener">阻塞、非阻塞、同步、异步</a><h3 id="事件驱动-event-driven"><a href="#事件驱动-event-driven" class="headerlink" title="事件驱动 event-driven"></a>事件驱动 event-driven</h3></li>
+<li>在Node中，客户端请求建立连接，提交数据等行为，会触发相应的事件。在Node中，在一个时刻，只能执行一个事件回调函数，但是在执行一个事件回调函数的中途，可以转而处理其他事件（比如，又有新用户连接了），然后返回继续执行原事件的回调函数，这种处理机制，称为“事件环”机制。<h2 id="node适合在哪里用"><a href="#node适合在哪里用" class="headerlink" title="node适合在哪里用"></a>node适合在哪里用</h2><h3 id="善于I-O，不善于计算"><a href="#善于I-O，不善于计算" class="headerlink" title="善于I/O，不善于计算"></a>善于I/O，不善于计算</h3></li>
+<li>善于i/o是因为它最擅长的就是人物调度</li>
+<li><p>当应用程序需要处理大量并发的I/O，而在向客户端发出响应之前，应用程序内部并不需要进行非常复杂的处理的时候，Node.js非常适合。Node.js也非常适合与web socket配合，开发长连接的实时交互应用程序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户表单收集</span><br><span class="line">考试系统</span><br><span class="line">聊天室</span><br><span class="line">图文直播</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Node.js没有web容器,不像其它的jsp、php等一样，直接通过静态路径就可以访问文件</p>
+<h2 id="了解概念"><a href="#了解概念" class="headerlink" title="了解概念"></a>了解概念</h2><h3 id="高并发"><a href="#高并发" class="headerlink" title="高并发"></a>高并发</h3></li>
+<li>高并发：是互联网分布式系统架构设计中必须考虑的因素之一，它通常是指，通过设计保证系统能够同时并行处理很多请求。</li>
+<li>高并发的指标：响应时间（Response Time），吞吐量（Throughput），每秒查询率QPS（Query Per Second），并发用户数<h3 id="nodejs流行框架"><a href="#nodejs流行框架" class="headerlink" title="nodejs流行框架"></a><a href="https://www.oschina.net/translate/best-nodejs-frameworks-for-web-and-app-development?cmp" target="_blank" rel="noopener">nodejs流行框架</a></h3></li>
+</ul>
 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:forever-chen.github.io/2019/06/24/why-use-node/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/19/read-note/" class="archive-article-date">
-  	<time datetime="2019-06-19T01:28:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/06/19/read-note/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">read-note</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/19/read-note/">read-note</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/06/18/singile-spa/" class="archive-article-date">
-  	<time datetime="2019-06-18T07:31:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-06-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/06/18/singile-spa/">singile-spa</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/react再学习/" class="archive-article-date">
-  	<time datetime="2019-05-29T09:27:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/react再学习/">react再学习</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/29/react-hooks/" class="archive-article-date">
-  	<time datetime="2019-05-29T08:41:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/29/react-hooks/">react-hooks</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/22/WeChartPublicAccount/" class="archive-article-date">
-  	<time datetime="2019-05-22T06:26:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/22/WeChartPublicAccount/">WeChartPublicAccount</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/15/commonJs-ESmodule/" class="archive-article-date">
-  	<time datetime="2019-05-15T07:40:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/15/commonJs-ESmodule/">commonJs-ESmodule</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/14/new-webPage/" class="archive-article-date">
-  	<time datetime="2019-05-14T08:08:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/14/new-webPage/">new-webPage</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/13/learn-express/" class="archive-article-date">
-  	<time datetime="2019-05-13T08:25:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/13/learn-express/">learn-express</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/05/05/first/" class="archive-article-date">
-  	<time datetime="2019-05-05T12:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-05</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/05/05/first/">经典语录</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">经典语录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -473,8 +353,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
