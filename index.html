@@ -152,6 +152,96 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Too-function" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/Too-function/">Too-function</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/02/Too-function/" class="archive-article-date">
+  	<time datetime="2019-07-02T02:05:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Too-function"><a href="#Too-function" class="headerlink" title="Too-function"></a>Too-function</h2><h3 id="检测数据类型"><a href="#检测数据类型" class="headerlink" title="检测数据类型"></a>检测数据类型</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function dataType(data)&#123;</span><br><span class="line">    var type = Object.prototype.toString.call(data)</span><br><span class="line">    switch(type)&#123;</span><br><span class="line">        case &quot;[object Object]&quot;:return &apos;object&apos;;</span><br><span class="line">        case &quot;[object Array]&quot;: return &apos;array&apos;;</span><br><span class="line">        case &quot;[object String]&quot;: return &apos;string&apos;;</span><br><span class="line">        case &quot;[object RegExp]&quot;: return &apos;reg&apos;;</span><br><span class="line">        case &quot;[object Date]&quot;: return &apos;date&apos;;</span><br><span class="line">        case &quot;[object Function]&quot;: return &apos;function&apos;;</span><br><span class="line">        case &quot;[object Null]&quot;: return &apos;null&apos;;</span><br><span class="line">        case &quot;[object Undefined]&quot;: return &apos;undefined&apos;;</span><br><span class="line">        default:return type;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="首字母大写"><a href="#首字母大写" class="headerlink" title="首字母大写"></a>首字母大写</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function capitalize(str)&#123;</span><br><span class="line">    return str.charAt(0).toUpperCase() + str.slice(1)</span><br><span class="line">&#125;</span><br><span class="line">// abc ==&gt; Abc</span><br><span class="line">//使用记忆函数</span><br><span class="line">let _capitalize = cached(capitalize)</span><br></pre></td></tr></table></figure>
+<h3 id="对象的深复制和浅复制"><a href="#对象的深复制和浅复制" class="headerlink" title="对象的深复制和浅复制"></a>对象的深复制和浅复制</h3><ul>
+<li><p>深复制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object.assign(&#123;&#125;,obj)</span><br><span class="line">var obj1 = &#123;...obj&#125; // 只能深复制简单对象</span><br><span class="line">JSON.parse(JSON.stringify(obj))     // 遇到对象值为函数，会赋值为空</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>浅复制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var a = obj</span><br><span class="line">Object.assign(obj)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="识别各种浏览器和平台"><a href="#识别各种浏览器和平台" class="headerlink" title="识别各种浏览器和平台"></a>识别各种浏览器和平台</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">//运行环境是浏览器</span><br><span class="line">let inBrowser = typeof window !== &apos;undefined&apos;;</span><br><span class="line">//运行环境是微信</span><br><span class="line">let inWeex = typeof WXEnvironment !== &apos;undefined&apos; &amp;&amp; !!WXEnvironment.platform;</span><br><span class="line">let weexPlatform = inWeex &amp;&amp; WXEnvironment.platform.toLowerCase();</span><br><span class="line">//浏览器 UA 判断</span><br><span class="line">let UA = inBrowser &amp;&amp; window.navigator.userAgent.toLowerCase();</span><br><span class="line">let isIE = UA &amp;&amp; /msie|trident/.test(UA);</span><br><span class="line">let isIE9 = UA &amp;&amp; UA.indexOf(&apos;msie 9.0&apos;) &gt; 0;</span><br><span class="line">let isEdge = UA &amp;&amp; UA.indexOf(&apos;edge/&apos;) &gt; 0;</span><br><span class="line">let isAndroid = (UA &amp;&amp; UA.indexOf(&apos;android&apos;) &gt; 0) || (weexPlatform === &apos;android&apos;);</span><br><span class="line">let isIOS = (UA &amp;&amp; /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === &apos;ios&apos;);</span><br><span class="line">let isChrome = UA &amp;&amp; /chrome\/\d+/.test(UA) &amp;&amp; !isEdge;</span><br></pre></td></tr></table></figure>
+<h3 id="检测是否为pc端浏览器模式"><a href="#检测是否为pc端浏览器模式" class="headerlink" title="检测是否为pc端浏览器模式"></a>检测是否为pc端浏览器模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function isPCBroswer() &#123;</span><br><span class="line">    let e = navigator.userAgent.toLowerCase()</span><br><span class="line">        , t = &quot;ipad&quot; == e.match(/ipad/i)</span><br><span class="line">        , i = &quot;iphone&quot; == e.match(/iphone/i)</span><br><span class="line">        , r = &quot;midp&quot; == e.match(/midp/i)</span><br><span class="line">        , n = &quot;rv:1.2.3.4&quot; == e.match(/rv:1.2.3.4/i)</span><br><span class="line">        , a = &quot;ucweb&quot; == e.match(/ucweb/i)</span><br><span class="line">        , o = &quot;android&quot; == e.match(/android/i)</span><br><span class="line">        , s = &quot;windows ce&quot; == e.match(/windows ce/i)</span><br><span class="line">        , l = &quot;windows mobile&quot; == e.match(/windows mobile/i);</span><br><span class="line">    return !(t || i || r || n || a || o || s || l)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数组去重"><a href="#数组去重" class="headerlink" title="数组去重"></a>数组去重</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Array.from(new Set([array.map(item=&gt;JSON.stringify(item)))).map(item=&gt;JSON.parse(item)) // 对于数据对象也可以进行去重</span><br></pre></td></tr></table></figure>
+<h3 id="日期格式化"><a href="#日期格式化" class="headerlink" title="日期格式化"></a>日期格式化</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function dateFormater(formater, t)&#123;</span><br><span class="line">    let date = t ? new Date(t) : new Date(),</span><br><span class="line">        Y = date.getFullYear() + &apos;&apos;,</span><br><span class="line">        M = date.getMonth() + 1,</span><br><span class="line">        D = date.getDate(),</span><br><span class="line">        H = date.getHours(),</span><br><span class="line">        m = date.getMinutes(),</span><br><span class="line">        s = date.getSeconds();</span><br><span class="line">    return formater.replace(/YYYY|yyyy/g,Y)</span><br><span class="line">        .replace(/YY|yy/g,Y.substr(2,2))</span><br><span class="line">        .replace(/MM/g,(M&lt;10?&apos;0&apos;:&apos;&apos;) + M)</span><br><span class="line">        .replace(/DD/g,(D&lt;10?&apos;0&apos;:&apos;&apos;) + D)</span><br><span class="line">        .replace(/HH|hh/g,(H&lt;10?&apos;0&apos;:&apos;&apos;) + H)</span><br><span class="line">        .replace(/mm/g,(m&lt;10?&apos;0&apos;:&apos;&apos;) + m)</span><br><span class="line">        .replace(/ss/g,(s&lt;10?&apos;0&apos;:&apos;&apos;) + s)</span><br><span class="line">&#125;</span><br><span class="line">// dateFormater(&apos;YYYY-MM-DD HH:mm&apos;, t) ==&gt; 2019-06-26 18:30</span><br><span class="line">// dateFormater(&apos;YYYYMMDDHHmm&apos;, t) ==&gt; 201906261830</span><br></pre></td></tr></table></figure>
+<h3 id="将指定字符串由一种时间格式转化为另一种"><a href="#将指定字符串由一种时间格式转化为另一种" class="headerlink" title="将指定字符串由一种时间格式转化为另一种"></a>将指定字符串由一种时间格式转化为另一种</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">function dateStrForma(str, from, to)&#123;</span><br><span class="line">    //&apos;20190626&apos; &apos;YYYYMMDD&apos; &apos;YYYY年MM月DD日&apos;</span><br><span class="line">    str += &apos;&apos;</span><br><span class="line">    let Y = &apos;&apos;</span><br><span class="line">    if(~(Y = from.indexOf(&apos;YYYY&apos;)))&#123;</span><br><span class="line">        Y = str.substr(Y, 4)</span><br><span class="line">        to = to.replace(/YYYY|yyyy/g,Y)</span><br><span class="line">    &#125;else if(~(Y = from.indexOf(&apos;YY&apos;)))&#123;</span><br><span class="line">        Y = str.substr(Y, 2)</span><br><span class="line">        to = to.replace(/YY|yy/g,Y)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    let k,i</span><br><span class="line">    [&apos;M&apos;,&apos;D&apos;,&apos;H&apos;,&apos;h&apos;,&apos;m&apos;,&apos;s&apos;].forEach(s =&gt;&#123;</span><br><span class="line">        i = from.indexOf(s+s)</span><br><span class="line">        k = ~i ? str.substr(i, 2) : &apos;&apos;</span><br><span class="line">        to = to.replace(s+s, k)</span><br><span class="line">    &#125;)</span><br><span class="line">    return to</span><br><span class="line">&#125;</span><br><span class="line">// dateStrForma(&apos;20190626&apos;, &apos;YYYYMMDD&apos;, &apos;YYYY年MM月DD日&apos;) ==&gt; 2019年06月26日</span><br><span class="line">// dateStrForma(&apos;121220190626&apos;, &apos;----YYYYMMDD&apos;, &apos;YYYY年MM月DD日&apos;) ==&gt; 2019年06月26日</span><br><span class="line">// dateStrForma(&apos;2019年06月26日&apos;, &apos;YYYY年MM月DD日&apos;, &apos;YYYYMMDD&apos;) ==&gt; 20190626</span><br><span class="line"></span><br><span class="line">// 一般的也可以使用正则来实现</span><br><span class="line">//&apos;2019年06月26日&apos;.replace(/(\d&#123;4&#125;)年(\d&#123;2&#125;)月(\d&#123;2&#125;)日/, &apos;$1-$2-$3&apos;) ==&gt; 2019-06-26</span><br></pre></td></tr></table></figure>
+<h3 id="获取URL参数"><a href="#获取URL参数" class="headerlink" title="获取URL参数"></a>获取URL参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function GetUrlParam()&#123;</span><br><span class="line">    let url = document.location.toString();</span><br><span class="line">    let arrObj = url.split(&quot;?&quot;);</span><br><span class="line">    let params = Object.create(null)</span><br><span class="line">    if (arrObj.length &gt; 1)&#123;</span><br><span class="line">        arrObj = arrObj[1].split(&quot;&amp;&quot;);</span><br><span class="line">        arrObj.forEach(item=&gt;&#123;</span><br><span class="line">            item = item.split(&quot;=&quot;);</span><br><span class="line">            params[item[0]] = item[1]</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    return params;</span><br><span class="line">&#125;</span><br><span class="line">// ?a=1&amp;b=2&amp;c=3 ==&gt; &#123;a: &quot;1&quot;, b: &quot;2&quot;, c: &quot;3&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="base64数据导出文件，文件下载"><a href="#base64数据导出文件，文件下载" class="headerlink" title="base64数据导出文件，文件下载"></a>base64数据导出文件，文件下载</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">function downloadFile(filename, data)&#123;</span><br><span class="line">    let DownloadLink = document.createElement(&apos;a&apos;);</span><br><span class="line"></span><br><span class="line">    if ( DownloadLink )&#123;</span><br><span class="line">        document.body.appendChild(DownloadLink);</span><br><span class="line">        DownloadLink.style = &apos;display: none&apos;;</span><br><span class="line">        DownloadLink.download = filename;</span><br><span class="line">        DownloadLink.href = data;</span><br><span class="line"></span><br><span class="line">        if ( document.createEvent )&#123;</span><br><span class="line">            let DownloadEvt = document.createEvent(&apos;MouseEvents&apos;);</span><br><span class="line"></span><br><span class="line">            DownloadEvt.initEvent(&apos;click&apos;, true, false);</span><br><span class="line">            DownloadLink.dispatchEvent(DownloadEvt);</span><br><span class="line">        &#125;</span><br><span class="line">        else if ( document.createEventObject )</span><br><span class="line">            DownloadLink.fireEvent(&apos;onclick&apos;);</span><br><span class="line">        else if (typeof DownloadLink.onclick == &apos;function&apos; )</span><br><span class="line">            DownloadLink.onclick();</span><br><span class="line"></span><br><span class="line">        document.body.removeChild(DownloadLink);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="浏览器开启全屏模式"><a href="#浏览器开启全屏模式" class="headerlink" title="浏览器开启全屏模式"></a>浏览器开启全屏模式</h3><ul>
+<li><p>开启全屏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function toFullScreen()&#123;</span><br><span class="line">    let elem = document.body;</span><br><span class="line">    elem.webkitRequestFullScreen</span><br><span class="line">    ? elem.webkitRequestFullScreen()</span><br><span class="line">    : elem.mozRequestFullScreen</span><br><span class="line">    ? elem.mozRequestFullScreen()</span><br><span class="line">    : elem.msRequestFullscreen</span><br><span class="line">    ? elem.msRequestFullscreen()</span><br><span class="line">    : elem.requestFullScreen</span><br><span class="line">    ? elem.requestFullScreen()</span><br><span class="line">    : alert(&quot;浏览器不支持全屏&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>退出全屏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">function exitFullscreen()&#123;</span><br><span class="line">    let elem = parent.document;</span><br><span class="line">    elem.webkitCancelFullScreen</span><br><span class="line">    ? elem.webkitCancelFullScreen()</span><br><span class="line">    : elem.mozCancelFullScreen</span><br><span class="line">    ? elem.mozCancelFullScreen()</span><br><span class="line">    : elem.cancelFullScreen</span><br><span class="line">    ? elem.cancelFullScreen()</span><br><span class="line">    : elem.msExitFullscreen</span><br><span class="line">    ? elem.msExitFullscreen()</span><br><span class="line">    : elem.exitFullscreen</span><br><span class="line">    ? elem.exitFullscreen()</span><br><span class="line">    : alert(&quot;切换失败,可尝试Esc退出&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="求取数组中非NaN数据中的最大值-最小值"><a href="#求取数组中非NaN数据中的最大值-最小值" class="headerlink" title="求取数组中非NaN数据中的最大值/最小值"></a>求取数组中非NaN数据中的最大值/最小值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function max(arr)&#123;</span><br><span class="line">    arr = arr.filter(item =&gt; !_isNaN(item))</span><br><span class="line">    return arr.length ? Math.max.apply(null, arr) : undefined</span><br><span class="line">&#125;</span><br><span class="line">//max([1, 2, &apos;11&apos;, null, &apos;fdf&apos;, []]) ==&gt; 11</span><br><span class="line">function min(arr)&#123;</span><br><span class="line">    arr = arr.filter(item =&gt; !_isNaN(item))</span><br><span class="line">    return arr.length ? Math.min.apply(null, arr) : undefined</span><br><span class="line">&#125;</span><br><span class="line">//max([1, 2, &apos;11&apos;, null, &apos;fdf&apos;, []]) ==&gt; 1</span><br></pre></td></tr></table></figure>
+<h3 id="利用performance-timing进行性能分析"><a href="#利用performance-timing进行性能分析" class="headerlink" title="利用performance.timing进行性能分析"></a>利用performance.timing进行性能分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">window.onload = function()&#123;</span><br><span class="line">    setTimeout(function()&#123;</span><br><span class="line">        let t = performance.timing</span><br><span class="line">        console.log(&apos;DNS查询耗时 ：&apos; + (t.domainLookupEnd - t.domainLookupStart).toFixed(0))</span><br><span class="line">        console.log(&apos;TCP链接耗时 ：&apos; + (t.connectEnd - t.connectStart).toFixed(0))</span><br><span class="line">        console.log(&apos;request请求耗时 ：&apos; + (t.responseEnd - t.responseStart).toFixed(0))</span><br><span class="line">        console.log(&apos;解析dom树耗时 ：&apos; + (t.domComplete - t.domInteractive).toFixed(0))</span><br><span class="line">        console.log(&apos;白屏时间 ：&apos; + (t.responseStart - t.navigationStart).toFixed(0))</span><br><span class="line">        console.log(&apos;domready时间 ：&apos; + (t.domContentLoadedEventEnd - t.navigationStart).toFixed(0))</span><br><span class="line">        console.log(&apos;onload时间 ：&apos; + (t.loadEventEnd - t.navigationStart).toFixed(0))</span><br><span class="line"></span><br><span class="line">        if(t = performance.memory)&#123;</span><br><span class="line">            console.log(&apos;js内存使用占比 ：&apos; + (t.usedJSHeapSize / t.totalJSHeapSize * 100).toFixed(2) + &apos;%&apos;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="禁止某些键盘事件"><a href="#禁止某些键盘事件" class="headerlink" title="禁止某些键盘事件"></a>禁止某些键盘事件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">document.addEventListener(&apos;keydown&apos;, function(event)&#123;</span><br><span class="line">    return !(</span><br><span class="line">        112 == event.keyCode || //F1</span><br><span class="line">        123 == event.keyCode || //F12</span><br><span class="line">        event.ctrlKey &amp;&amp; 82 == event.keyCode || //ctrl + R</span><br><span class="line">        event.ctrlKey &amp;&amp; 78 == event.keyCode || //ctrl + N</span><br><span class="line">        event.shiftKey &amp;&amp; 121 == event.keyCode || //shift + F10</span><br><span class="line">        event.altKey &amp;&amp; 115 == event.keyCode || //alt + F4</span><br><span class="line">        &quot;A&quot; == event.srcElement.tagName &amp;&amp; event.shiftKey //shift + 点击a标签</span><br><span class="line">    ) || (event.returnValue = false)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="禁止右键、选择、复制"><a href="#禁止右键、选择、复制" class="headerlink" title="禁止右键、选择、复制"></a>禁止右键、选择、复制</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[&apos;contextmenu&apos;, &apos;selectstart&apos;, &apos;copy&apos;].forEach(function(ev)&#123;</span><br><span class="line">    document.addEventListener(ev, function(event)&#123;</span><br><span class="line">        return event.returnValue = false</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/02/Too-function/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-why-use-node" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -953,111 +1043,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2019/05/13/learn-express/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-first" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/05/05/first/">经典语录</a>
-    </h1>
-  
-
-        
-        <a href="/2019/05/05/first/" class="archive-article-date">
-  	<time datetime="2019-05-05T12:54:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-05-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="2019-05-05"><a href="#2019-05-05" class="headerlink" title="2019-05-05"></a>2019-05-05</h2><ul>
-<li>水至清则无鱼，人至察则无徒。</li>
-<li>大部分时候，人的选择都有一个时间窗口，也就是我们俗话说的，过了这个村，就没这个店了。 </li>
-<li>太精明的人不明白，这个世界上没有绝对的完美。完美也不是算计出来的，是用心经营出来的。 </li>
-<li>逢人只说三分话，莫可全交一片心。</li>
-<li>一碗米不够，二碗米不够，三碗四碗还是觉得你只给了沧海一粟。 </li>
-<li>人的善良一定要有度！当一个人不思进取，一味索取帮助时，请及时收起你的善良。 </li>
-<li>饭局千古事，得失寸唇知。<h2 id="2019-05-08"><a href="#2019-05-08" class="headerlink" title="2019-05-08"></a>2019-05-08</h2></li>
-<li>有时候我们总是肆无忌惮的伤害我们身边的人，因为我们知道，我们根本无法伤害到那些不爱我们的人</li>
-<li>太过轻易得到的东西，刚开始会让人觉得欣喜，但长时间下来，会让别人觉得理所当然。人类的劣根性，总是习惯于攀附强者而欺凌弱者</li>
-<li>学会拒绝别人，既是对自己的负责，也是对他人的尊重。</li>
-<li>所有的烦恼都来源于看不清自己，你那么顾及他人，谁来顾及你？生活是现实的，不会因为你的委曲求全而变得更加美好，是你的心软教会了别人得寸进尺。</li>
-<li>与其照顾别人，伤痕累累，不如坚持自己，活得洒脱。</li>
-<li>绝大多数的人是因为看见而相信，只有少数的人是因为相信而看见</li>
-<li>“我们没有办法跟别人拼昨天，我们也许也没有办法跟别人拼今天，但我们必须跟别人拼未来”。</li>
-<li>人生没有彩排，每一天都是现场直播</li>
-<li>如果你简单，这个世界就对你简单</li>
-<li>怀才就像怀孕，时间久了会让人看出来</li>
-<li>人生如果错了方向，停止就是进步</li>
-<li>要成功，需要朋友，要取得巨大的成功，需要敌人；天下没有永远的敌人，但是有永远的朋友，有时候敌人也可以成为朋友<h2 id="2019-05-09"><a href="#2019-05-09" class="headerlink" title="2019-05-09"></a>2019-05-09</h2></li>
-<li>抱有被动思维的人，总是习惯承受：世界给我什么，我就接受什么。</li>
-<li>习惯受害者思维的人，或许可以获得他人一时的同情与抚慰，但不可能长久。</li>
-<li>有字书中聊新知，无字书里品人生。<h2 id="2019-06-11"><a href="#2019-06-11" class="headerlink" title="2019-06-11"></a>2019-06-11</h2></li>
-<li>用眼看世界，难免一叶障目；用心观世界，万物尽收眼底；而用一个优等的心去触摸世界，一人一物，一草一木，一山一水，皆明朗历历。</li>
-<li>去靠近内心自带光源的人，不仅可以在我们的生活中为自己的人生指路，而且可以为他人照明。</li>
-<li>点燃自身的光源，去照亮别人，则是人生远行的终极目标。</li>
-<li>比成功 和幸福都重要的是，一个人必须有一个真实的自我，一颗饱满的灵魂，他决定了一个人争取成功和体验幸福的能力。</li>
-<li>一个人若是内心自带光源，便不依附，不盲从，终极一生都会独善其身，于人生，于生活，都在学最好的别人，做最好的自己。</li>
-<li>人生不如意事十之八九，生活却从不会厚此薄彼。</li>
-<li>做一个内心自带光源的人，播种你的善良，让美好天天不期而遇；发出你的光芒，每一天的微笑都是你最美的模样。</li>
-<li></li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">经典语录</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/05/05/first/">展开全文 >></a>
         </p>
       
 
